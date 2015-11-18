@@ -71,7 +71,7 @@ local troopbarSet = "+";
 local rotation = getOrientation();
 
 --gets screen sizes of device
-local width, height = getScreenSize();
+local width, height = getScreenResolution();
 
 --x coordinate for slots left rot
 ----------------------------------
