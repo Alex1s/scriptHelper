@@ -1,9 +1,9 @@
 ##Functions:
-*demo(); put more than 12 troops and sim and run this function to see if this tool here actually works ^^
-*tapp(x, y);taps on a given point, no need of any usleep
-*multiTapp(x, y, n) taps n amount of times on a given point, no need of any usleep
-*select("troopName") selects troopName, slot needs to be defined in var to work, no need of any usleep
-*selectSlot(slotNumber) selects the given slot, useless if you use the *select("troopName") function, negative slot number = slot number when troopbar swiped to the right
+-demo(); put more than 12 troops and sim and run this function to see if this tool here actually works ^^
+-tapp(x, y);taps on a given point, no need of any usleep
+-multiTapp(x, y, n) taps n amount of times on a given point, no need of any usleep
+-select("troopName") selects troopName, slot needs to be defined in var to work, no need of any usleep
+-selectSlot(slotNumber) selects the given slot, useless if you use the *select("troopName") function, negative slot number = slot number when troopbar swiped to the right
 ##Varibiables:
 *minSleep = this is the minimum amount of time used on any screen tap (because *AutoTouch messed uo otherwise), defsult should be ok
 *troopbarSleep = time to wait after troopbar swipe, to prevent the script to mess up, default is 1s, take that into consideration for your timings
