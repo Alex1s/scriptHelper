@@ -75,34 +75,19 @@ local width, height = getScreenSize();
 
 --x coordinate for slots left rot
 ----------------------------------
-local xCoo = width/51,2;
-local slot1 = (height/24)*1.4;
-local slot2 = (height/24)*3.4;
-local slot3 = (height/24)*5.4;
-local slot4 = (height/24)*7.4;
-local slot5 = (height/24)*9.4;
-local slot6 = (height/24)*11.4;
-local slot7 = (height/24)*13.4;
-local slot8 = (height/24)*15.4;
-local slot9 = (height/24)*17.4;
-local slot10 = (height/24)*19.4;
-local slot11 = (height/24)*21.4;
-local slot12 = (height/24)*23.4;
-
---these variables will be filled with 
---setProperSlotCoo function
-local finalSlot1 = nil;
-local finalSlot2 = nil;
-local finalSlot3 = nil;
-local finalSlot4 = nil;
-local finalSlot5 = nil;
-local finalSlot6 = nil;
-local finalSlot7 = nil;
-local finalSlot8 = nil;
-local finalSlot9 = nil;
-local finalSlot10 = nil;
-local finalSlot11 = nil;
-local finalSlot12 = nil;
+local xCoo = width*0.0195;
+local slot1 = height*0.0583;
+local slot2 = height*0.1417;
+local slot3 = height*0.2251;
+local slot4 = height*0.3083;
+local slot5 = height*0.3916;
+local slot6 = height*0.4751;
+local slot7 = height*0.5583;
+local slot8 = height*0.6417;
+local slot9 = height*0.7251;
+local slot10 = height*0.8083;
+local slot11 = height*0.8917;
+local slot12 = height*0.9759;
 -----------------
 --end variables
 -----------------
@@ -110,45 +95,29 @@ local finalSlot12 = nil;
 --start functions
 ------------------
 
---sets proper Coordinates
----------------------------
-function setProperSlotCoo()
-	--if rotation == 3 then
-		xCoo = xCoo;
-		finalSlot1 = slot1;
-		finalSlot2 = slot2;
-		finalSlot3 = slot3;
-		finalSlot4 = slot4;
-		finalSlot5 = slot5;
-		finalSlot6 = slot6;
-		finalSlot7 = slot7;
-		finalSlot8 = slot8;
-		finalSlot9 = slot9;
-		finalSlot10 = slot10;
-		finalSlot11 = slot11;
-		finalSlot12 = slot12;
-	--end
-	--if rotation == 4 then
-	--	xCoo = width-xCoo;
-	--	finalSlot1 = slot12;
-	--	finalSlot2 = slot11;
-	--	finalSlot3 = slot10;
-	--	finalSlot4 = slot9;
-	--	finalSlot5 = slot8;
-	--	finalSlot6 = slot7;
-	--	finalSlot7 = slot6;
-	--	finalSlot8 = slot5;
-	--	finalSlot9 = slot4;
-	--	finalSlot10 = slot3;
-	--	finalSlot11 = slot2;
-	--	finalSlot12 = slot1;
-	--end
+--sets slot and xCoo correct
+function properCoos()
+	if recRotation == 4 then
+		xCoo = width-xCoo;
+		slot1 = height-slot1;
+		slot2 = height-slot2;
+		slot3 = height-slot3;
+		slot4 = height-slot4;
+		slot5 = height-slot5;
+		slot6 = height-slot6;
+		slot7 = height-slot7;
+		slot8 = height-slot8;
+		slot9 = height-slot9;
+		slot10 = height-slot10;
+		slot11 = height-slot11;
+		slot12 = height-slot12;
+	end
 end
+
 
 --selects a slot
 ------------------
 function selectSlot(slot)
-	setProperSlotCoo();
 	checkTroopbar(slot);
 	
 	if slot == 1 or slot == -1 then
@@ -320,37 +289,32 @@ function setTroopbar(set)
 end
 
 
---recalc xCoo
+--recalcY(if iPad turned around)
+--------------------
+function recalcY(y)
+	if recRotation ~= rotation then
+		newY = height-y;
+		return (newY);
+	else
+		return (y);
+	end
+end
+
+--recalcX(if iPad turned around)
 --------------------
 function recalcX(x)
 	if recRotation ~= rotation then
-		newX = x+2*(width/2-x);
+		newX = width-x;
 		return (newX);
 	else
 		return (x);
 	end
 end
 
---recalc yCoo
---------------------
-function recalcY(y)
-	if recRotation ~= rotation then
-		newY = y+2*(height/2-y);
-		return (newY);
-	else
-		return (y);
-	end
-
-end
-
 --taps on a given point
 ----------------------------------------------
 function tapp(x, y)
---	if recRotation ~= rotation then
-		tap(recalcX(x), recalcY(y));
---	else
---		tap(x, y);
---	end
+	tap(recalcX(x), recalcY(y));
 	usleep(minSleep);
 end
 
@@ -390,6 +354,8 @@ function demo()
 		usleep(1000000);
 	end
 end
+
+properCoos();
 ----------------
 --end functions
 ----------------
