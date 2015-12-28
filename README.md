@@ -1,12 +1,12 @@
 ##Functions:
 
-tapp(x, y);taps on a given point, no need of any usleep
+tapp(x, y) - taps on a given point, no need of any usleep
 
-multiTapp(x, y, n) taps n amount of times on a given point, no need of any usleep
+multiTapp(x, y, n) - taps n amount of times on a given point, no need of any usleep
 
 select("troopName") selects troopName, slot needs to be defined in var to work, no need of any usleep
 
-selectSlot(slotNumber) selects the given slot, useless if you use the *select("troopName") function...
+selectSlot(slotNumber) selects the given slot, useless if you use the *select("troopName") function
 
 
 ##Varibiables:
@@ -18,17 +18,18 @@ troopbarSet = if you start script with the troopbar to the right change this to 
 
 recRotation = the device rotation when the script was recorded; if home button was on right -> 3, if home button was on left -> 4
 
-convertTo = change the value of this variable to "retina" if you want to run a non-retina script on your retina device
-change the value of this variable to "noretina" if you want to run a retina script on your non-retina device
+recScreenRes = enter "retia" or "noretina", this var is important if u want to run a nonretina script on a retina device; if you use your script only locally this var can be ignored
 
 
 
 ##troop-slot-assignments:
 
 
-define what troop is in what slot, slots are counted from left to right starting at "1", min 12 troops, max 24 troops
+define what troop is in what slot, slots are counted from left to right starting at 1
 
-DO NOT FORGET TO PUT THE TOTAL AMOUNT OF TROOPS IN THE "totalTroopCount" var
+you need to use at least 12 troops and are allowed to use a maximum of 24 troops.
+
+Make sure you enter ALL the troops that are used in the attack, or script will calulate total amount of troops wrong.
 
 ##Troop Names
 the text inside the select command (select("text")) needs to be exact, in the list below you will be able to see what text you will have to enter to get the troop you want
