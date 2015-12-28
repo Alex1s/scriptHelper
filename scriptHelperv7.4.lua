@@ -51,8 +51,12 @@ local troops = {
 }
 ---------------------------
 
---convert to "retina"/"noretina"
-local convertTo = "nil"
+--type of screen when script was recorded (to convert coordinates)
+--only important if u want to run on another device
+--unimportant if you only use script on your own device
+--enter "noretina" or "retina"
+------------------------------------------------------
+local recScreenRes = "nil"
 
 --device rotation on recording
 -- "3" if home button was on right
@@ -250,9 +254,9 @@ end
 
 --convert resolution
 function convRes(coo)
-	if convertTo == "retina" and width == 1536 then
+	if recScreenRes == "noretina" and width == 1536 then
 		coo = coo*2
-	elseif convertTo == "noretina" and width == 768 then
+	elseif recScreenRes == "retina" and width == 768 then
 		coo = coo/2	
 	end
 	return coo
