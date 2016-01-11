@@ -1,5 +1,5 @@
 --made by Alexis :)
---version 7.4
+--version 7.5
 
 
 -----------------
@@ -48,6 +48,9 @@ local troops = {
 	poison = 0 ,
 	earth = 0 ,
 	haste = 0 ,
+
+	--dark elixir cc spell
+	deSpell = 0
 }
 ---------------------------
 
@@ -56,7 +59,7 @@ local troops = {
 --unimportant if you only use script on your own device
 --enter "noretina" or "retina"
 ------------------------------------------------------
-local recScreenRes = "nil"
+local recScreenRes = "retina"
 
 --device rotation on recording
 -- "3" if home button was on right
@@ -72,7 +75,7 @@ local minSleep = 1000
 --1000000 should be good
 local troopbarSleep = 1000000
 
---current troopbar set
+--troopbar set at beginning of script
 ----------------------
 local troopbarSet = "+"
 
@@ -84,12 +87,27 @@ local troopbarSet = "+"
 --"START YOUR SCRIPT HERE:"
 -----------------------------------------
 
+--set the recording resolution
+----------------------------------------
+function setRecResolution()
+	if recScreenRes == "retina" then
+		recWidth = 1536
+		recHeight = 2048
+	elseif recScreenRes == "noretina" then
+		recWidth = 768
+		recHeight = 1024
+	end
+end
+setRecResolution()
+
+
 --the total troop count
 local totalTroopCount = 0
 
 --noAccesSlots
+--will be defined in setTotalTroopCount()
 ---------------------------------
-local noAccesSlots = totalTroopCount-12
+local noAccesSlots
 
 --current device rotation
 -------------------------
@@ -100,32 +118,39 @@ local width, height = getScreenResolution()
 
 --x coordinate for slots left rot
 ----------------------------------
-local slotCoo = {}
-slotCoo["x"] = width*0.0195
-slotCoo[1] = height*0.0583
-slotCoo[2] = height*0.1417
-slotCoo[3] = height*0.2251
-slotCoo[4] = height*0.3083
-slotCoo[5] = height*0.3916
-slotCoo[6] = height*0.4751
-slotCoo[7] = height*0.5583
-slotCoo[8] = height*0.6417
-slotCoo[9] = height*0.7251
-slotCoo[10] = height*0.8083
-slotCoo[11] = height*0.8917
-slotCoo[12] = height*0.9759
+local slotCoo = {
+	recHeight*0.0583 , --slot 1
+	recHeight*0.1417 , --slot 2
+	recHeight*0.2251 , --slot 3
+	recHeight*0.3083 , --slot 4
+	recHeight*0.3916 , --slot 5
+	recHeight*0.4751 , --slot 6
+	recHeight*0.5583 , --slot 7
+	recHeight*0.6417 , --slot 8
+	recHeight*0.7251 , --slot 9
+	recHeight*0.8083 , --slot 10
+	recHeight*0.8917 , --slot 11
+	recHeight*0.9759 --slot 12
+}
+slotCoo["x"] = recWidth*0.0195
 -----------------
 --end variables
 -----------------
 ------------------
 --start functions
 ------------------
-
+--[[
+function setVars( )
+	-- body
+end
+--]]
 function setTotalTroopCount()
 	--set totalTroopCount
 	for i, v in pairs(troops) do
-		if v != 0 then
+		if v ~= 0 then
 			totalTroopCount = totalTroopCount+1
+		end
+		noAccesSlots = totalTroopCount-12
 	end
 
 	--print error
@@ -160,8 +185,7 @@ end
 --selects a slot
 ------------------
 function selectSlot(slot, troopName)
-	--check if slot is valid:
-	if slot != 0 then
+	if slot ~= 0 then
 		if troopbarSet == "-" then
 			if slot-noAccesSlots > 0 then
 				slot = slot-noAccesSlots
@@ -169,13 +193,13 @@ function selectSlot(slot, troopName)
 			else
 				setTroopbar("+")
 			end
-		--this happens of troopbar set != "-" -> troopBarSet = "+"
+		--this happens of troopbar set ~= "-" -> troopBarSet = "+"
 		elseif slot > 12 then
 			setTroopbar("-")
 			slot = slot-noAccesSlots
 		end
+		tapp(slotCoo["x"], slotCoo[slot])
 
-		tapp(slotCoo["x"], slotCoo[slotCoo[slot]])
 	else
 		--print error
 		alert(string.format("ERROR!\
@@ -190,12 +214,11 @@ end
 --------------------------------------
 function select(troop)
 	if troops[troop] == nil then
-		alert(troop)
 		alert(string.format("ERROR!\
 There is no troop named %q. See the log for details", troop))
 		log(string.format("ERROR! There is no troop named %q. See the readme for more details on the naming of troops.", troop))
 	else
-		selectSlot(slotOfTroop[troop], troop)
+		selectSlot(troops[troop], troop)
 	end
 end
 
@@ -234,7 +257,7 @@ end
 --------------------
 function recalcY(y)
 	if recRotation ~= rotation then
-		y = height-y
+		y = recHeight-y --height
 	end
 	y = convRes(y)
 	return y
@@ -245,7 +268,7 @@ end
 --------------------
 function recalcX(x)
 	if recRotation ~= rotation then
-		x = width-x
+		x = recWidth-x --(width)
 	end
 	x = convRes(x)
 	return x
@@ -275,6 +298,13 @@ function multiTapp(x, y, n)
 	for i=1,n do 
 		tapp(x, y)
 	end
+end
+
+--activates the ability of the given hero
+--selects the hero if he wasnt deployed first
+--------------------------------------------------
+function ability(hero)
+	select(hero)
 end
 
 properCoos()
