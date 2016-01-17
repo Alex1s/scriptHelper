@@ -1,5 +1,5 @@
 --made by Alexis :)
---version 7.5
+--version 7.6
 
 
 -----------------
@@ -50,7 +50,7 @@ local troops = {
 	haste = 0 ,
 
 	--dark elixir cc spell
-	deSpell = 0
+	ccSpell = 0
 }
 ---------------------------
 
@@ -295,6 +295,14 @@ end
 --taps on a given point n amount of times
 -------------------------------------------
 function multiTapp(x, y, n)
+	if res == "retina" and recScreenRes == "noretina" then
+		x = x / 2
+		y = y / 2
+	elseif res == "noretina" and recScreenRes == "retina" then
+		x = x * 2
+		y = y * 2
+	end
+	
 	for i=1,n do 
 		tapp(x, y)
 	end
